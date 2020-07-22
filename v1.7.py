@@ -142,9 +142,19 @@ def efficiency(speed,x):
 def calculate_efficiency():
     f = open(file_effiency,'w')
     f.write('Procesos,TiempoEjecucion,Eficiencia\n')
+    prom_ = 0
+    standard_deviation = 0
+    sum_cuadrada = 0
     for i in range(len(x)):
         s = speed(y[0],y[i])
-        f.write(str(round(x[i])) + ',' + str(round(s,4)) + ',' + str(round(efficiency(s,x[i]),4)) + '\n')
+        prom_ += efficiency(s,x[i])
+        f.write(str(round(x[i])) + ',' + str(round(s,N_DECIMAL)) + ',' + str(round(efficiency(s,x[i]),N_DECIMAL)) + '\n')
+    prom_ = prom_/(len(x))
+    for i in range(len(x)):
+        sum_cuadrada += (efficiency(speed(y[0],y[i]),x[i]) - prom_) ** 2
+    standard_deviation = sqrt(sum_cuadrada/len(x))
+    print("La deviación estandar es: "+str(round(standard_deviation,N_DECIMAL)))
+    print("El promedio de eficiencia es: "+str(round(prom_,N_DECIMAL)))
 
         
 def main():
